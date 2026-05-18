@@ -4,6 +4,7 @@ import LazyPage from './LazyPage'
 
 const LoginPage = LazyPage(() => import('../pages/LoginPage'))
 const RegisterPage = LazyPage(() => import('../pages/RegisterPage'))
+const AuthCallbackPage = LazyPage(() => import('../pages/AuthCallbackPage'))
 const DashboardPage = LazyPage(() => import('../pages/DashboardPage'))
 const CellarPage = LazyPage(() => import('../pages/CellarPage'))
 
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
   {
     path: '/register',
     element: <RegisterPage />,
+  },
+  {
+    path: '/auth/callback',
+    element: <AuthCallbackPage />,
   },
   {
     path: '/',

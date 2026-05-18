@@ -1,6 +1,8 @@
-import { Form, Input, Button, Typography, message } from 'antd'
+import { Form, Input, Button, Typography, message, Divider } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
+import { GoogleOutlined } from '@ant-design/icons'
 import { useAuthStore } from '../entities/auth/store'
+import { env } from '../shared/config/env'
 
 const { Title } = Typography
 
@@ -17,9 +19,27 @@ const RegisterPage = () => {
     }
   }
 
+  const handleGoogleLogin = () => {
+    window.location.href = `${env.API_URL}/auth/google`
+  }
+
   return (
     <div style={{ maxWidth: 400, margin: '120px auto', padding: 24 }}>
       <Title level={2} style={{ textAlign: 'center' }}>Регистрация</Title>
+
+      <Button
+        type="default"
+        icon={<GoogleOutlined />}
+        onClick={handleGoogleLogin}
+        block
+        size="large"
+        style={{ marginBottom: 16 }}
+      >
+        Зарегистрироваться через Google
+      </Button>
+
+      <Divider>или</Divider>
+
       <Form onFinish={onFinish} layout="vertical">
         <Form.Item name="email" label="Email" rules={[{ required: true, type: 'email' }]}>
           <Input />
