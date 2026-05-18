@@ -19,6 +19,7 @@ export interface AuthResponse {
     email: string
     login?: string
     displayName?: string
+    avatarPath?: string
   }
 }
 
@@ -29,7 +30,7 @@ export const authApi = {
   register: (payload: RegisterPayload) =>
     api.post<AuthResponse>('/auth/register', payload),
 
-  logout: () => api.post('/auth/logout'),
+  logout: (refreshToken: string) => api.post('/auth/logout', { refresh_token: refreshToken }),
 
   refresh: (refreshToken: string) =>
     api.post<AuthResponse>('/auth/refresh', { refresh_token: refreshToken }),

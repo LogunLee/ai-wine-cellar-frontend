@@ -1,14 +1,30 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { MainLayout } from './MainLayout'
-import LazyPage from './LazyPage'
-
-const LoginPage = LazyPage(() => import('../pages/LoginPage'))
-const RegisterPage = LazyPage(() => import('../pages/RegisterPage'))
-const AuthCallbackPage = LazyPage(() => import('../pages/AuthCallbackPage'))
-const DashboardPage = LazyPage(() => import('../pages/DashboardPage'))
-const CellarPage = LazyPage(() => import('../pages/CellarPage'))
+import LoginPage from '../pages/LoginPage'
+import RegisterPage from '../pages/RegisterPage'
+import AuthCallbackPage from '../pages/AuthCallbackPage'
+import DashboardPage from '../pages/DashboardPage'
+import CellarPage from '../pages/CellarPage'
 
 export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/dashboard" replace />,
+      },
+      {
+        path: 'dashboard',
+        element: <DashboardPage />,
+      },
+      {
+        path: 'cellar',
+        element: <CellarPage />,
+      },
+    ],
+  },
   {
     path: '/login',
     element: <LoginPage />,
@@ -20,19 +36,5 @@ export const router = createBrowserRouter([
   {
     path: '/auth/callback',
     element: <AuthCallbackPage />,
-  },
-  {
-    path: '/',
-    element: <MainLayout />,
-    children: [
-      {
-        index: true,
-        element: <DashboardPage />,
-      },
-      {
-        path: 'cellar',
-        element: <CellarPage />,
-      },
-    ],
   },
 ])

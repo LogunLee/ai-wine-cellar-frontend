@@ -1,31 +1,21 @@
-import { useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Spin } from 'antd'
-import { useAuthStore } from '../entities/auth/store'
+import { Box, CircularProgress, Typography } from '@mui/material'
 
-const AuthCallbackPage = () => {
-  const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const { checkAuth } = useAuthStore()
-
-  useEffect(() => {
-    const accessToken = searchParams.get('access_token')
-    const refreshToken = searchParams.get('refresh_token')
-
-    if (accessToken && refreshToken) {
-      localStorage.setItem('access_token', accessToken)
-      localStorage.setItem('refresh_token', refreshToken)
-      checkAuth().then(() => navigate('/'))
-    } else {
-      navigate('/login')
-    }
-  }, [searchParams, checkAuth, navigate])
-
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Spin size="large" tip="Авторизация..." />
-    </div>
-  )
-}
+const AuthCallbackPage = () => (
+  <Box
+    sx={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 2,
+    }}
+  >
+    <CircularProgress size={48} />
+    <Typography variant="body1" color="text.secondary">
+      Авторизация...
+    </Typography>
+  </Box>
+)
 
 export default AuthCallbackPage

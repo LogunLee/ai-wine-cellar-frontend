@@ -1,11 +1,12 @@
 import { create } from 'zustand'
-import { authApi, type AuthResponse } from '../shared/api/auth'
+import { authApi, type AuthResponse } from '../../shared/api/auth'
 
 interface User {
   id: string
   email: string
   login?: string
   displayName?: string
+  avatarPath?: string
 }
 
 interface AuthState {
@@ -51,7 +52,10 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logout: async () => {
     try {
-      await authApi.logout()
+      const refreshToken = localStorage.getItem('refresh_token')
+      if (refreshToken) {
+        await authApi.logout(refreshToken)
+      }
     } finally {
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
