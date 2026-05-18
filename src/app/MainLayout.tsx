@@ -14,6 +14,7 @@ import {
   Typography,
   Divider,
   Avatar,
+  Button,
 } from '@mui/material'
 import {
   Menu as MenuIcon,
@@ -21,14 +22,17 @@ import {
   WineBar,
   Logout,
   Person,
+  LocalBar,
 } from '@mui/icons-material'
 import { useAuthStore } from '../entities/auth/store'
 import { env } from '../shared/config/env'
+import WineSearchModal from '../features/wine-search/WineSearchModal'
 
 const drawerWidth = 240
 
 export const MainLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
 
@@ -76,6 +80,24 @@ export const MainLayout = () => {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             AI Wine Cellar
           </Typography>
+
+          <Button
+            color="inherit"
+            startIcon={<LocalBar />}
+            onClick={() => setSearchOpen(true)}
+            sx={{ mr: 2, display: { xs: 'none', sm: 'flex' } }}
+          >
+            Найти вино
+          </Button>
+
+          <IconButton
+            color="inherit"
+            onClick={() => setSearchOpen(true)}
+            sx={{ display: { sm: 'none' } }}
+          >
+            <LocalBar />
+          </IconButton>
+
           <IconButton color="inherit" onClick={() => navigate('/profile')}>
             <Avatar
               src={avatarUrl || undefined}
@@ -128,6 +150,8 @@ export const MainLayout = () => {
         <Toolbar />
         <Outlet />
       </Box>
+
+      <WineSearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </Box>
   )
 }
